@@ -11,6 +11,7 @@
 	import * as Tabs from '$lib/components/ui/tabs';
 	import { page } from '$app/stores';
 	import type { PageData } from './$types';
+	import CardContent from '$lib/components/ui/card/card-content.svelte';
 
 	export let data: PageData;
 
@@ -18,6 +19,49 @@
 	$: ({ Products } = data);
 	$: console.log(Products);
 	$: console.log($Products?.data?.products?.edges);
+
+	const products = [
+		{
+			id: '1',
+			product_type_id: 101,
+			title: 'Wireless Headphones',
+			price: '$199',
+			image: '/headphones.jpg',
+			digital: false,
+			shippable: true,
+			variations: ['Black', 'White', 'Blue']
+		},
+		{
+			id: '2',
+			product_type_id: 102,
+			title: 'E-Book: JavaScript Mastery',
+			price: '$29',
+			image: '/ebook.jpg',
+			digital: true,
+			shippable: false,
+			variations: ['PDF', 'EPUB', 'MOBI']
+		},
+		{
+			id: '3',
+			product_type_id: 103,
+			title: 'Gaming Laptop',
+			price: '$1499',
+			image: '/laptop.jpg',
+			digital: false,
+			shippable: true,
+			variations: ['512GB SSD', '1TB SSD']
+		},
+		{
+			id: '4',
+			product_type_id: 104,
+			title: 'Online Coding Course',
+			price: '$99',
+			image: '/coding-course.jpg',
+			digital: true,
+			shippable: false,
+			variations: ['Beginner', 'Intermediate', 'Advanced']
+		}
+	];
 </script>
 
 <div>
@@ -64,79 +108,26 @@
 							view your products types and edit their different variations.
 						</Card.Description>
 					</Card.Header>
-					<Card.Content>
-						<!-- <Table.Root>
-							<Table.Header>
-								<Table.Row>
-									<Table.Head class="hidden w-[100px] sm:table-cell">
-										<span class="sr-only">Image</span>
-									</Table.Head>
-									<Table.Head>Name</Table.Head>
-									<Table.Head>Status</Table.Head>
-									<Table.Head>Price</Table.Head>
-									<Table.Head class="hidden md:table-cell">Total Sales</Table.Head>
-									<Table.Head class="hidden md:table-cell">Created at</Table.Head>
-									<Table.Head>
-										<span class="sr-only">Actions</span>
-									</Table.Head>
-								</Table.Row>
-							</Table.Header>
-							<Table.Body>
-								{#if $Products?.data?.products?.edges}
-									{#each $Products.data.products.edges as { node: product }, idx (idx)}
-										<Table.Row>
-											<Table.Cell class="hidden sm:table-cell">
-												<img
-													alt="Product example"
-													class="aspect-square rounded-md object-cover"
-													height="64"
-													width="64"
-													src="/images/placeholder.png"
-												/>
-											</Table.Cell>
-											<Table.Cell class="font-medium">{product?.title || 'Untitled'}</Table.Cell>
-											<Table.Cell>
-												<Badge variant="outline">{product?.status || 'Unknown'}</Badge>
-											</Table.Cell>
-											<Table.Cell>
-												{product?.productVariationByDefaultVariantId?.price || 'N/A'}
-											</Table.Cell>
-											<Table.Cell class="hidden md:table-cell">25</Table.Cell>
-											<Table.Cell class="hidden md:table-cell">
-												{new Date(product?.createdAt).toLocaleDateString() || 'N/A'}
-											</Table.Cell>
-											<Table.Cell>
-												<DropdownMenu.Root>
-													<DropdownMenu.Trigger asChild let:builder>
-														<Button
-															aria-haspopup="true"
-															size="icon"
-															variant="ghost"
-															builders={[builder]}
-														>
-															<Ellipsis class="h-4 w-4" />
-															<span class="sr-only">Toggle menu</span>
-														</Button>
-													</DropdownMenu.Trigger>
-													<DropdownMenu.Content align="end">
-														<DropdownMenu.Label>Actions</DropdownMenu.Label>
-														<DropdownMenu.Item href="/admin/{storeId}/p/{product?.id || ''}/">
-															Edit
-														</DropdownMenu.Item>
-														<DropdownMenu.Item>Delete</DropdownMenu.Item>
-													</DropdownMenu.Content>
-												</DropdownMenu.Root>
-											</Table.Cell>
-										</Table.Row>
-									{/each}
-								{:else}
-									<p>Loading...</p>
-								{/if}
-							</Table.Body>
-						</Table.Root> -->
+					<Card.Content class="grid grid-cols-1 gap-6 p-4 sm:grid-cols-2 lg:grid-cols-4">
+						{#each products as product}
+							<Card.Root class="rounded-2xl p-4 shadow-lg relative">
+								<CardContent class="mt-4">
+									<h2 class="text-xl font-semibold">{product.title}</h2>
+									<p class="text-sm text-gray-700">
+										{product.digital ? 'Digital Product' : 'Physical Product'}
+									</p>
+									<p class="text-sm text-gray-700">
+										{product.shippable ? 'Shippable' : 'Not Shippable'}
+									</p>
+									<div class="mt-2 text-sm text-gray-600">
+										Variations: {product.variations.join(', ')}
+									</div>
+								</CardContent></Card.Root
+							>
+						{/each}
 					</Card.Content>
 					<Card.Footer>
-						<div class="text-xs text-muted-foreground">
+						<div class="text-muted-foreground text-xs">
 							Showing <strong>1-10</strong> of <strong>32</strong> products
 						</div>
 					</Card.Footer>
