@@ -28,7 +28,7 @@
 </script>
 
 <main class="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-	<div class="mx-auto grid max-w-[59rem] flex-1 auto-rows-max gap-4">
+	<div class="mx-auto grid max-w-7xl flex-1 auto-rows-max gap-4">
 		<div class="flex items-center gap-4">
 			<Button variant="outline" size="icon" class="h-7 w-7">
 				<ChevronLeft class="h-4 w-4" />
@@ -94,74 +94,130 @@
 						<Card.Title>Variations</Card.Title>
 						<Card.Description>Lipsum dolor sit amet, consectetur adipiscing elit</Card.Description>
 					</Card.Header>
-					<Card.Content>
-						<Table.Root>
-							<Table.Header>
-								<Table.Row>
-									<Table.Head class="w-[100px]">SKU</Table.Head>
-									<Table.Head>Stock</Table.Head>
-									<Table.Head>Price</Table.Head>
-									<Table.Head class="w-[100px]">Size</Table.Head>
-								</Table.Row>
-							</Table.Header>
-							<Table.Body>
-								<Table.Row>
-									<Table.Cell class="font-semibold">GGPC-001</Table.Cell>
-									<Table.Cell>
-										<Label for="stock-1" class="sr-only">Stock</Label>
-										<Input id="stock-1" type="number" value="100" />
-									</Table.Cell>
-									<Table.Cell>
-										<Label for="price-1" class="sr-only">Price</Label>
-										<Input id="price-1" type="number" value="99.99" />
-									</Table.Cell>
-									<Table.Cell>
-										<ToggleGroup.Root type="single" value="s" variant="outline">
-											<ToggleGroup.Item value="s">S</ToggleGroup.Item>
-											<ToggleGroup.Item value="m">M</ToggleGroup.Item>
-											<ToggleGroup.Item value="l">L</ToggleGroup.Item>
-										</ToggleGroup.Root>
-									</Table.Cell>
-								</Table.Row>
-								<Table.Row>
-									<Table.Cell class="font-semibold">GGPC-002</Table.Cell>
-									<Table.Cell>
-										<Label for="stock-2" class="sr-only">Stock</Label>
-										<Input id="stock-2" type="number" value="143" />
-									</Table.Cell>
-									<Table.Cell>
-										<Label for="price-2" class="sr-only">Price</Label>
-										<Input id="price-2" type="number" value="99.99" />
-									</Table.Cell>
-									<Table.Cell>
-										<ToggleGroup.Root type="single" value="m" variant="outline">
-											<ToggleGroup.Item value="s">S</ToggleGroup.Item>
-											<ToggleGroup.Item value="m">M</ToggleGroup.Item>
-											<ToggleGroup.Item value="l">L</ToggleGroup.Item>
-										</ToggleGroup.Root>
-									</Table.Cell>
-								</Table.Row>
-								<Table.Row>
-									<Table.Cell class="font-semibold">GGPC-003</Table.Cell>
-									<Table.Cell>
-										<Label for="stock-3" class="sr-only">Stock</Label>
-										<Input id="stock-3" type="number" value="32" />
-									</Table.Cell>
-									<Table.Cell>
-										<Label for="price-3" class="sr-only">Stock</Label>
-										<Input id="price-3" type="number" value="99.99" />
-									</Table.Cell>
-									<Table.Cell>
-										<ToggleGroup.Root type="single" value="s" variant="outline">
-											<ToggleGroup.Item value="s">S</ToggleGroup.Item>
-											<ToggleGroup.Item value="m">M</ToggleGroup.Item>
-											<ToggleGroup.Item value="l">L</ToggleGroup.Item>
-										</ToggleGroup.Root>
-									</Table.Cell>
-								</Table.Row>
-							</Table.Body>
-						</Table.Root>
-					</Card.Content>
+					<!-- <div class="w-full overflow-x-auto"> -->
+						<Card.Content class="max-h-60 max-w-[53rem] overflow-y-auto">
+							<Table.Root class="relative w-full table-fixed">
+								<Table.Header class="sticky top-0 z-50 bg-gray-900">
+									<Table.Row>
+										<Table.Head class="w-[300px]">SKU</Table.Head>
+										<Table.Head class="w-[300px]">Stock</Table.Head>
+										<Table.Head class="w-[300px]">Price</Table.Head>
+										<Table.Head class="w-[300px]">Size</Table.Head>
+									</Table.Row>
+								</Table.Header>
+								<Table.Body class="">
+									<Table.Row>
+										<Table.Cell class="font-semibold">GGPC-001</Table.Cell>
+										<Table.Cell>
+											<Label for="stock-1" class="sr-only">Stock</Label>
+											<Input id="stock-1" type="number" value="100" />
+										</Table.Cell>
+										<Table.Cell>
+											<Label for="price-1" class="sr-only">Price</Label>
+											<Input id="price-1" type="number" value="99.99" />
+										</Table.Cell>
+										<Table.Cell>
+											<ToggleGroup.Root type="single" value="s" variant="outline">
+												<ToggleGroup.Item value="s">S</ToggleGroup.Item>
+												<ToggleGroup.Item value="m">M</ToggleGroup.Item>
+												<ToggleGroup.Item value="l">L</ToggleGroup.Item>
+											</ToggleGroup.Root>
+										</Table.Cell>
+									</Table.Row>
+									<Table.Row>
+										<Table.Cell class="font-semibold">GGPC-002</Table.Cell>
+										<Table.Cell>
+											<Label for="stock-2" class="sr-only">Stock</Label>
+											<Input id="stock-2" type="number" value="143" />
+										</Table.Cell>
+										<Table.Cell>
+											<Label for="price-2" class="sr-only">Price</Label>
+											<Input id="price-2" type="number" value="99.99" />
+										</Table.Cell>
+										<Table.Cell>
+											<ToggleGroup.Root type="single" value="m" variant="outline">
+												<ToggleGroup.Item value="s">S</ToggleGroup.Item>
+												<ToggleGroup.Item value="m">M</ToggleGroup.Item>
+												<ToggleGroup.Item value="l">L</ToggleGroup.Item>
+											</ToggleGroup.Root>
+										</Table.Cell>
+									</Table.Row>
+									<Table.Row>
+										<Table.Cell class="font-semibold">GGPC-003</Table.Cell>
+										<Table.Cell>
+											<Label for="stock-3" class="sr-only">Stock</Label>
+											<Input id="stock-3" type="number" value="32" />
+										</Table.Cell>
+										<Table.Cell>
+											<Label for="price-3" class="sr-only">Stock</Label>
+											<Input id="price-3" type="number" value="99.99" />
+										</Table.Cell>
+										<Table.Cell>
+											<ToggleGroup.Root type="single" value="s" variant="outline">
+												<ToggleGroup.Item value="s">S</ToggleGroup.Item>
+												<ToggleGroup.Item value="m">M</ToggleGroup.Item>
+												<ToggleGroup.Item value="l">L</ToggleGroup.Item>
+											</ToggleGroup.Root>
+										</Table.Cell>
+									</Table.Row>
+									<Table.Row>
+										<Table.Cell class="font-semibold">GGPC-003</Table.Cell>
+										<Table.Cell>
+											<Label for="stock-3" class="sr-only">Stock</Label>
+											<Input id="stock-3" type="number" value="32" />
+										</Table.Cell>
+										<Table.Cell>
+											<Label for="price-3" class="sr-only">Stock</Label>
+											<Input id="price-3" type="number" value="99.99" />
+										</Table.Cell>
+										<Table.Cell>
+											<ToggleGroup.Root type="single" value="s" variant="outline">
+												<ToggleGroup.Item value="s">S</ToggleGroup.Item>
+												<ToggleGroup.Item value="m">M</ToggleGroup.Item>
+												<ToggleGroup.Item value="l">L</ToggleGroup.Item>
+											</ToggleGroup.Root>
+										</Table.Cell>
+									</Table.Row>
+									<Table.Row>
+										<Table.Cell class="font-semibold">GGPC-003</Table.Cell>
+										<Table.Cell>
+											<Label for="stock-3" class="sr-only">Stock</Label>
+											<Input id="stock-3" type="number" value="32" />
+										</Table.Cell>
+										<Table.Cell>
+											<Label for="price-3" class="sr-only">Stock</Label>
+											<Input id="price-3" type="number" value="99.99" />
+										</Table.Cell>
+										<Table.Cell>
+											<ToggleGroup.Root type="single" value="s" variant="outline">
+												<ToggleGroup.Item value="s">S</ToggleGroup.Item>
+												<ToggleGroup.Item value="m">M</ToggleGroup.Item>
+												<ToggleGroup.Item value="l">L</ToggleGroup.Item>
+											</ToggleGroup.Root>
+										</Table.Cell>
+									</Table.Row>
+									<Table.Row>
+										<Table.Cell class="font-semibold">GGPC-003</Table.Cell>
+										<Table.Cell>
+											<Label for="stock-3" class="sr-only">Stock</Label>
+											<Input id="stock-3" type="number" value="32" />
+										</Table.Cell>
+										<Table.Cell>
+											<Label for="price-3" class="sr-only">Stock</Label>
+											<Input id="price-3" type="number" value="99.99" />
+										</Table.Cell>
+										<Table.Cell>
+											<ToggleGroup.Root type="single" value="s" variant="outline">
+												<ToggleGroup.Item value="s">S</ToggleGroup.Item>
+												<ToggleGroup.Item value="m">M</ToggleGroup.Item>
+												<ToggleGroup.Item value="l">L</ToggleGroup.Item>
+											</ToggleGroup.Root>
+										</Table.Cell>
+									</Table.Row>
+								</Table.Body>
+							</Table.Root>
+						</Card.Content>
+					<!-- </div> -->
 					<Card.Footer class="justify-center border-t p-4">
 						<Button size="sm" variant="ghost" class="gap-1">
 							<CirclePlus class="h-3.5 w-3.5" />
@@ -264,7 +320,7 @@
 								<button
 									class="flex aspect-square w-full items-center justify-center rounded-md border border-dashed"
 								>
-									<Upload class="h-4 w-4 text-muted-foreground" />
+									<Upload class="text-muted-foreground h-4 w-4" />
 									<span class="sr-only">Upload</span>
 								</button>
 							</div>

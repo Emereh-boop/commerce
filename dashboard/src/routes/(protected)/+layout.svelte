@@ -9,7 +9,14 @@
 		Settings,
 		ShoppingCart,
 		Workflow,
-		UsersRound
+		UsersRound,
+		Box,
+
+		Type,
+
+		PackagePlus
+
+
 	} from 'lucide-svelte';
 
 	import * as Breadcrumb from '$lib/components/ui/breadcrumb';
@@ -23,21 +30,21 @@
 	let storeId = $page.params.store;
 </script>
 
-<div class="flex min-h-screen w-full flex-col bg-muted/40">
-	<aside class="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
+<div class="bg-muted/40 flex min-h-screen w-full flex-col">
+	<aside class="bg-background fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r sm:flex">
 		<nav class="flex flex-col items-center gap-4 px-2 py-4">
 			<a
-				href="##"
-				class="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
+				href="/#"
+				class="bg-primary text-primary-foreground group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full text-lg font-semibold md:h-8 md:w-8 md:text-base"
 			>
 				<Package2 class="h-4 w-4 transition-all group-hover:scale-110" />
 				<span class="sr-only">Hellocart</span>
 			</a>
-			<!-- <Tooltip.Root>
+			<Tooltip.Root>
 				<Tooltip.Trigger asChild let:builder>
 					<a
 						href="/admin/{storeId}"
-						class="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+						class="text-muted-foreground hover:text-foreground flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8"
 						use:builder.action
 						{...builder}
 					>
@@ -46,12 +53,12 @@
 					</a>
 				</Tooltip.Trigger>
 				<Tooltip.Content side="right">Dashboard</Tooltip.Content>
-			</Tooltip.Root> -->
-			<!-- <Tooltip.Root>
+			</Tooltip.Root>
+			<Tooltip.Root>
 				<Tooltip.Trigger asChild let:builder>
 					<a
 						href="/admin/{storeId}/orders/"
-						class="flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:text-foreground md:h-8 md:w-8"
+						class="hover:text-foreground flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8"
 						use:builder.action
 						{...builder}
 					>
@@ -60,12 +67,12 @@
 					</a>
 				</Tooltip.Trigger>
 				<Tooltip.Content side="right">Orders</Tooltip.Content>
-			</Tooltip.Root> -->
-			<Tooltip.Root>
+			</Tooltip.Root>
+						<Tooltip.Root>
 				<Tooltip.Trigger asChild let:builder>
 					<a
 						href="/admin/{storeId}/"
-						class="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+						class="bg-accent text-accent-foreground hover:text-foreground flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8"
 						use:builder.action
 						{...builder}
 					>
@@ -78,8 +85,23 @@
 			<Tooltip.Root>
 				<Tooltip.Trigger asChild let:builder>
 					<a
+						href="/p/type"
+						class="text-muted-foreground hover:text-foreground flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8"
+						use:builder.action
+						{...builder}
+					>
+						<PackagePlus class="h-5 w-5" />
+						<span class="sr-only">Products type</span>
+					</a>
+				</Tooltip.Trigger>
+				<Tooltip.Content side="right">Dashboard</Tooltip.Content>
+			</Tooltip.Root>
+
+			<Tooltip.Root>
+				<Tooltip.Trigger asChild let:builder>
+					<a
 						href="/admin/{storeId}/categories"
-						class="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+						class="bg-accent text-accent-foreground hover:text-foreground flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8"
 						use:builder.action
 						{...builder}
 					>
@@ -89,11 +111,11 @@
 				</Tooltip.Trigger>
 				<Tooltip.Content side="right">Categories</Tooltip.Content>
 			</Tooltip.Root>
-			<!-- <Tooltip.Root>
+			<Tooltip.Root>
 				<Tooltip.Trigger asChild let:builder>
 					<a
 						href="/admin/{storeId}/customers"
-						class="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+						class="text-muted-foreground hover:text-foreground flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8"
 						use:builder.action
 						{...builder}
 					>
@@ -102,12 +124,12 @@
 					</a>
 				</Tooltip.Trigger>
 				<Tooltip.Content side="right">Customers</Tooltip.Content>
-			</Tooltip.Root> -->
-			<!-- <Tooltip.Root>
+			</Tooltip.Root>
+			<Tooltip.Root>
 				<Tooltip.Trigger asChild let:builder>
 					<a
 						href="/admin/{storeId}/analytics"
-						class="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+						class="text-muted-foreground hover:text-foreground flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8"
 						use:builder.action
 						{...builder}
 					>
@@ -116,14 +138,14 @@
 					</a>
 				</Tooltip.Trigger>
 				<Tooltip.Content side="right">Analytics</Tooltip.Content>
-			</Tooltip.Root> -->
+			</Tooltip.Root>
 		</nav>
 		<nav class="mt-auto flex flex-col items-center gap-4 px-2 py-4">
 			<Tooltip.Root>
 				<Tooltip.Trigger asChild let:builder>
 					<a
 						href="/admin/{storeId}/settings"
-						class="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+						class="text-muted-foreground hover:text-foreground flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8"
 						use:builder.action
 						{...builder}
 					>
@@ -137,7 +159,7 @@
 	</aside>
 	<div class="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
 		<header
-			class="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6"
+			class="bg-background sticky top-0 z-30 flex h-14 items-center gap-4 border-b px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6"
 		>
 			<Sheet.Root>
 				<Sheet.Trigger asChild let:builder>
@@ -150,48 +172,48 @@
 					<nav class="grid gap-6 text-lg font-medium">
 						<a
 							href="##"
-							class="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
+							class="bg-primary text-primary-foreground group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full text-lg font-semibold md:text-base"
 						>
 							<Package2 class="h-5 w-5 transition-all group-hover:scale-110" />
 							<span class="sr-only">Hellocart</span>
 						</a>
 						<a
 							href="/admin/{storeId}/"
-							class="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+							class="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5"
 						>
 							Dashboard
 						</a>
 						<a
 							href="/admin/{storeId}/order"
-							class="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+							class="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5"
 						>
 							<ShoppingCart class="h-5 w-5" />
 							Orders
 						</a>
 						<a
 							href="/admin/{storeId}/products"
-							class="flex items-center gap-4 px-2.5 text-foreground"
+							class="text-foreground flex items-center gap-4 px-2.5"
 						>
 							<Package class="h-5 w-5" />
 							Products
 						</a>
 						<a
 							href="/admin/{storeId}/customers"
-							class="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+							class="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5"
 						>
 							<UsersRound class="h-5 w-5" />
 							Customers
 						</a>
 						<a
 							href="/admin/{storeId}/settings"
-							class="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+							class="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5"
 						>
 							<LineChart class="h-5 w-5" />
 							Settings
 						</a>
 						<a
 							href="/admin/{storeId}/categories"
-							class="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+							class="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5"
 						>
 							<Workflow class="h-5 w-5" /> Categories
 						</a>
@@ -218,11 +240,11 @@
 				</Breadcrumb.List>
 			</Breadcrumb.Root>
 			<div class="relative ml-auto flex-1 md:grow-0">
-				<Search class="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+				<Search class="text-muted-foreground absolute left-2.5 top-2.5 h-4 w-4" />
 				<Input
 					type="search"
 					placeholder="Search..."
-					class="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[320px]"
+					class="bg-background w-full rounded-lg pl-8 md:w-[200px] lg:w-[320px]"
 				/>
 			</div>
 			<DropdownMenu.Root>

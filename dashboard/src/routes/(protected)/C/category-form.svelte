@@ -4,15 +4,15 @@
 	import { formSchema, type FormSchema } from './schema';
 	import { superForm, type SuperValidated, type Infer } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
-	import { graphql } from '$houdini';
+	// import { graphql } from '$houdini';
 
-	const CreateCategoryMutation = graphql(`
-		mutation AddCategory($parentID: ID!, $title: String!, $description: String) {
-			createCategory(category: { parentID: $parentID, title: $title, description: $description }) {
-				...category
-			}
-		}
-	`);
+	// const CreateCategoryMutation = graphql(`
+	// 	mutation AddCategory($parentID: ID!, $title: String!, $description: String) {
+	// 		createCategory(category: { parentID: $parentID, title: $title, description: $description }) {
+	// 			...category
+	// 		}
+	// 	}
+	// `);
 
 	export let data: SuperValidated<Infer<FormSchema>>;
 
@@ -35,43 +35,43 @@
 	async function handleSubmitWithValidation(event: SubmitEvent) {
 		event.preventDefault();
 
-		if (!form.form.valid) {
-			return; // Prevent submission if form is invalid
-		}
+		// if (!form.form.valid) {
+		// 	return; // Prevent submission if form is invalid
+		// }
 
-		try {
-			const response = await CreateCategoryMutation.mutate({
-				title: $formData.name,
-				description: $formData.description,
-				parentID: 'Q2F0ZWdvcnk6Nw=='
-			});
+		// try {
+		// 	const response = await CreateCategoryMutation.mutate({
+		// 		title: $formData.name,
+		// 		description: $formData.description,
+		// 		parentID: 'Q2F0ZWdvcnk6Nw=='
+		// 	});
 
-			if (response.errors) {
-				errorMessage = 'An unexpected error occurred.';
-			} else {
-				successMessage = 'Category created successfully!';
-			}
-		} catch (error) {
-			errorMessage = 'An unexpected error occurred.';
-		}
+		// 	if (response.errors) {
+		// 		errorMessage = 'An unexpected error occurred.';
+		// 	} else {
+		// 		successMessage = 'Category created successfully!';
+		// 	}
+		// } catch (error) {
+		// 	errorMessage = 'An unexpected error occurred.';
+		// }
 	}
 	async function handleSubmitOnSubmit(event: SubmitEvent) {
 		event.preventDefault();
 
-		try {
-			const response = await CreateCategoryMutation.mutate({
-				title: $formData.name,
-				description: $formData.description,
-				parentID: 'Q2F0ZWdvcnk6Nw=='
-			});
-			if (response.errors) {
-				errorMessage = 'An unexpected error occurred.';
-			} else {
-				successMessage = 'Category created successfully!';
-			}
-		} catch (error) {
-			errorMessage = 'An unexpected error occurred.';
-		}
+		// try {
+		// 	const response = await CreateCategoryMutation.mutate({
+		// 		title: $formData.name,
+		// 		description: $formData.description,
+		// 		parentID: 'Q2F0ZWdvcnk6Nw=='
+		// 	});
+		// 	if (response.errors) {
+		// 		errorMessage = 'An unexpected error occurred.';
+		// 	} else {
+		// 		successMessage = 'Category created successfully!';
+		// 	}
+		// } catch (error) {
+		// 	errorMessage = 'An unexpected error occurred.';
+		// }
 	}
 </script>
 
