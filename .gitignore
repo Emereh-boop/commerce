@@ -59,6 +59,9 @@ coverage.out
 /.vscode/
 /*.iml
 
+# Node modules
+node_modules/
+
 # OS-specific files
 .DS_Store
 Thumbs.db

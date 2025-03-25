@@ -68,10 +68,10 @@
 				</Tooltip.Trigger>
 				<Tooltip.Content side="right">Orders</Tooltip.Content>
 			</Tooltip.Root>
-						<Tooltip.Root>
+			<Tooltip.Root>
 				<Tooltip.Trigger asChild let:builder>
 					<a
-						href="/admin/{storeId}/"
+						href="/"
 						class="bg-accent text-accent-foreground hover:text-foreground flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8"
 						use:builder.action
 						{...builder}
@@ -96,11 +96,10 @@
 				</Tooltip.Trigger>
 				<Tooltip.Content side="right">Dashboard</Tooltip.Content>
 			</Tooltip.Root>
-
 			<Tooltip.Root>
 				<Tooltip.Trigger asChild let:builder>
 					<a
-						href="/admin/{storeId}/categories"
+						href="/C"
 						class="bg-accent text-accent-foreground hover:text-foreground flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8"
 						use:builder.action
 						{...builder}
@@ -144,7 +143,7 @@
 			<Tooltip.Root>
 				<Tooltip.Trigger asChild let:builder>
 					<a
-						href="/admin/{storeId}/settings"
+						href="/settings"
 						class="text-muted-foreground hover:text-foreground flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8"
 						use:builder.action
 						{...builder}
