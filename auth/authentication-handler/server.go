@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"crypto/rand"
 	"encoding/base64"
@@ -160,6 +161,10 @@ func handleCallback(c *fiber.Ctx) error {
 		return c.Status(http.StatusInternalServerError).SendString("Failed to fetch user info: " + err.Error())
 	}
 
+	if err := registerUser(client, userInfo); err != nil {
+		return c.Status(http.StatusInternalServerError).SendString("Failed to register user: " + err.Error())
+	}
+
 	loginChallenge := c.Cookies("login_challenge")
 	if loginChallenge == "" {
 		return c.Status(http.StatusBadRequest).SendString("Missing login_challenge")
@@ -186,14 +191,39 @@ func fetchUserInfo(client *http.Client) (*GoogleUserInfo, error) {
 	return &userInfo, nil
 }
 
+func registerUser(client *http.Client, userInfo *GoogleUserInfo) error {
+	// Marshal userInfo to JSON
+	// TODO: send provider
+	userInfoJSON, err := json.Marshal(userInfo)
+	if err != nil {
+		return err // Handle JSON marshalling error
+	}
+
+	// Use bytes.NewReader to create an io.Reader
+	resp, err := client.Post("http://host.minikube.internal:8000/api/v1/auth/register", "application/json", bytes.NewReader(userInfoJSON))
+	if err != nil {
+		return err // Handle HTTP POST error
+	}
+	defer resp.Body.Close()
+
+	// Check for a successful response
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("failed to send user info: status code %d", resp.StatusCode)
+	}
+
+	return nil
+}
+
 type GoogleUserInfo struct {
-	ID           string `json:"id"`
-	Email        string `json:"email"`
-	VerifieEmail bool   `json:"verified_email"`
-	Name         string `json:"name"`
-	GivenName    string `json:"given_name"`
-	FamilyName   string `json:"family_name"`
-	Picture      string `json:"picture"`
+	ID            string `json:"id"`
+	Sub           string `json:"sub"`
+	Email         string `json:"email"`
+	VerifiedEmail bool   `json:"verified_email"`
+	Name          string `json:"name"`
+	GivenName     string `json:"given_name"`
+	FamilyName    string `json:"family_name"`
+	Picture       string `json:"picture"`
+	Locale        string `json:"locale"`
 }
 
 func acceptHydraLogin(loginChallenge string, user *GoogleUserInfo) (*hydra.OAuth2RedirectTo, error) {

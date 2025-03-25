@@ -21,26 +21,39 @@ type UserError interface {
 	GetPath() []string
 }
 
-type AllowedCategoryAttributes struct {
-	Title    string                   `json:"title"`
-	DataType ProductAttributeDataType `json:"dataType"`
+type AddCartItemInput struct {
+	ProductID string `json:"productId"`
+	Quantity  int    `json:"quantity"`
 }
 
-type AllowedProductAttributes struct {
-	Title    string                   `json:"title"`
-	DataType ProductAttributeDataType `json:"dataType"`
+type Cart struct {
+	ID    string     `json:"id"`
+	Items []CartItem `json:"items"`
+	Total float64    `json:"total"`
+}
+
+type CartItem struct {
+	ID       string       `json:"id"`
+	Product  *CartProduct `json:"product"`
+	Quantity int          `json:"quantity"`
+}
+
+type CartProduct struct {
+	ID    string  `json:"id"`
+	Title string  `json:"title"`
+	Price float64 `json:"price"`
+	Image string  `json:"image"`
 }
 
 type Category struct {
-	ID                string                      `json:"id"`
-	Slug              string                      `json:"slug"`
-	Title             string                      `json:"title"`
-	Description       *string                     `json:"description,omitempty"`
-	Products          *ProductConnection          `json:"products,omitempty"`
-	AllowedAttributes []AllowedCategoryAttributes `json:"allowedAttributes"`
-	Images            *CategoryImages             `json:"images,omitempty"`
-	UpdatedAt         time.Time                   `json:"updatedAt"`
-	CreatedAt         time.Time                   `json:"createdAt"`
+	ID          string             `json:"id"`
+	Slug        string             `json:"slug"`
+	Title       string             `json:"title"`
+	Description *string            `json:"description,omitempty"`
+	Products    *ProductConnection `json:"products,omitempty"`
+	Images      *CategoryImages    `json:"images,omitempty"`
+	UpdatedAt   time.Time          `json:"updatedAt"`
+	CreatedAt   time.Time          `json:"createdAt"`
 }
 
 func (Category) IsNode()            {}
@@ -91,6 +104,9 @@ type ImageInput struct {
 	AltText *string `json:"altText,omitempty"`
 }
 
+type Mutation struct {
+}
+
 type PageInfo struct {
 	StartCursor     string `json:"startCursor"`
 	EndCursor       string `json:"endCursor"`
@@ -99,27 +115,23 @@ type PageInfo struct {
 }
 
 type Product struct {
-	ID             string           `json:"id"`
-	Title          string           `json:"title"`
-	Description    string           `json:"description"`
-	DefaultVariant *ProductVariant  `json:"defaultVariant"`
-	Variants       []ProductVariant `json:"variants"`
-	Images         []Image          `json:"images"`
-	UpdatedAt      time.Time        `json:"updatedAt"`
-	CreatedAt      time.Time        `json:"createdAt"`
+	ID             string             `json:"id"`
+	Title          string             `json:"title"`
+	Description    string             `json:"description"`
+	Attributes     []ProductAttribute `json:"attributes"`
+	DefaultVariant *ProductVariant    `json:"defaultVariant"`
+	Variants       []ProductVariant   `json:"variants"`
+	Images         []Image            `json:"images"`
+	UpdatedAt      time.Time          `json:"updatedAt"`
+	CreatedAt      time.Time          `json:"createdAt"`
 }
 
 func (Product) IsNode()            {}
 func (this Product) GetID() string { return this.ID }
 
 type ProductAttribute struct {
-	Key   string  `json:"key"`
-	Value *string `json:"value,omitempty"`
-}
-
-type ProductAttributeValue struct {
-	IntValue    *int    `json:"intValue,omitempty"`
-	StringValue *string `json:"stringValue,omitempty"`
+	AttributeTitle string `json:"attribute_title"`
+	Value          string `json:"value"`
 }
 
 type ProductConnection struct {
@@ -161,14 +173,16 @@ type ProductVariant struct {
 	Description       string             `json:"description"`
 	Attributes        []ProductAttribute `json:"attributes"`
 	StockStatus       ProductStockStatus `json:"stockStatus"`
-	UpdatedAt         time.Time          `json:"updatedAt"`
-	CreatedAt         time.Time          `json:"createdAt"`
 }
 
 func (ProductVariant) IsNode()            {}
 func (this ProductVariant) GetID() string { return this.ID }
 
 type Query struct {
+}
+
+type RemoveCartItemInput struct {
+	ProductID string `json:"productId"`
 }
 
 type Shop struct {
@@ -211,6 +225,11 @@ type ShopImages struct {
 	CoverImage *Image `json:"coverImage,omitempty"`
 }
 
+type UpdateCartItemInput struct {
+	ProductID string `json:"productId"`
+	Quantity  int    `json:"quantity"`
+}
+
 type ErrorCode string
 
 const (
@@ -243,7 +262,7 @@ func (e ErrorCode) String() string {
 	return string(e)
 }
 
-func (e *ErrorCode) UnmarshalGQL(v interface{}) error {
+func (e *ErrorCode) UnmarshalGQL(v any) error {
 	str, ok := v.(string)
 	if !ok {
 		return fmt.Errorf("enums must be strings")
@@ -257,47 +276,6 @@ func (e *ErrorCode) UnmarshalGQL(v interface{}) error {
 }
 
 func (e ErrorCode) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type ProductAttributeDataType string
-
-const (
-	ProductAttributeDataTypeString  ProductAttributeDataType = "STRING"
-	ProductAttributeDataTypeInteger ProductAttributeDataType = "INTEGER"
-)
-
-var AllProductAttributeDataType = []ProductAttributeDataType{
-	ProductAttributeDataTypeString,
-	ProductAttributeDataTypeInteger,
-}
-
-func (e ProductAttributeDataType) IsValid() bool {
-	switch e {
-	case ProductAttributeDataTypeString, ProductAttributeDataTypeInteger:
-		return true
-	}
-	return false
-}
-
-func (e ProductAttributeDataType) String() string {
-	return string(e)
-}
-
-func (e *ProductAttributeDataType) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = ProductAttributeDataType(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid ProductAttributeDataType", str)
-	}
-	return nil
-}
-
-func (e ProductAttributeDataType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
@@ -327,7 +305,7 @@ func (e ProductStockStatus) String() string {
 	return string(e)
 }
 
-func (e *ProductStockStatus) UnmarshalGQL(v interface{}) error {
+func (e *ProductStockStatus) UnmarshalGQL(v any) error {
 	str, ok := v.(string)
 	if !ok {
 		return fmt.Errorf("enums must be strings")

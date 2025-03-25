@@ -1,13 +1,64 @@
 [
   {
-    "id": "api:rest-api",
+    "id":"api:rest-api-docs",
     "upstream": {
       "preserve_host": true,
-      "url": "http://192.168.49.1:8000",
-      "strip_path": "/api"
+      "url": "http://host.minikube.internal:8000"
     },
     "match": {
-      "url": "http://127.0.0.1:8080/api/v1/",
+      "url": "http://127.0.0.1:8080/api/v1/docs/<**>",
+      "methods": [
+        "GET"
+      ]
+    },
+    "authenticators": [
+      {
+        "handler": "anonymous"
+      }
+    ],
+    "authorizer": {
+      "handler": "allow"
+    }, 
+    "mutators": [
+      {
+        "handler": "noop"
+      }
+    ]
+  },
+  {
+    "id": "api:user-register",
+    "upstream": {
+      "preserve_host": true,
+      "url": "http://host.minikube.internal:8000"
+    },
+    "match": {
+      "url": "http://127.0.0.1:8080/api/v1/auth/<{register}>",
+      "methods": [
+        "POST"
+      ]
+    },
+    "authenticators": [
+      {
+        "handler": "anonymous"
+      }
+    ],
+    "authorizer": {
+      "handler": "allow"
+    },
+    "mutators": [
+      {
+        "handler": "noop"
+      }
+    ]
+  },
+  {
+    "id": "api:shop-enpoint",
+    "upstream": {
+      "preserve_host": true,
+      "url": "http://host.minikube.internal:8000"
+    },
+    "match": {
+      "url": "http://127.0.0.1:8080/api/v1/<{shops}><**>",
       "methods": [
         "GET",
         "POST",
@@ -22,11 +73,45 @@
       }
     ],
     "authorizer": {
-      "handler": "allow"
+      "handler": "keto_engine_acp_ory"
     },
     "mutators": [
       {
-        "handler": "noop"
+        "handler": "header"
+      }
+    ]
+  },
+  {
+    "id": "api:rest-api",
+    "upstream": {
+      "preserve_host": true,
+      "url": "http://host.minikube.internal:8000"
+    },
+    "match": {
+      "url": "http://127.0.0.1:8080/api/v1/<{shops}><**>",
+      "methods": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE",
+        "PATCH"
+      ]
+    },
+    "authenticators": [
+      {
+        "handler": "oauth2_introspection"
+      }
+    ],
+    "authorizer": {
+      "handler": "keto_engine_acp_ory",
+      "config": {
+        "required_action": "read",
+        "required_resource": "admin_panel"
+      }
+    },
+    "mutators": [
+      {
+        "handler": "header"
       }
     ]
   },
@@ -34,7 +119,7 @@
     "id": "api:public-graph-playground",
     "upstream": {
       "preserve_host": true,
-      "url": "http://192.168.49.1:8000"
+      "url": "http://host.minikube.internal:8000"
     },
     "match": {
       "url": "http://<*>.localhost:8080/api/graph",
@@ -60,7 +145,7 @@
     "id": "api:admin-graph-playground",
     "upstream": {
       "preserve_host": true,
-      "url": "http://192.168.49.1:8000"
+      "url": "http://host.minikube.internal:8000"
     },
     "match": {
       "url": "http://<*>.localhost:8080/api/admin/graph",
@@ -86,18 +171,19 @@
     "id": "api:public-graph-query",
     "upstream": {
       "preserve_host": true,
-      "url": "http://192.168.49.1:8000"
+      "url": "http://host.minikube.internal:8000"
     },
     "match": {
       "url": "http://<*>.localhost:8080/api/query",
       "methods": [
         "GET",
-        "POST"
+        "POST",
+        "OPTIONS"
       ]
     },
     "authenticators": [
       {
-        "handler": "oauth2_introspection"
+        "handler": "anonymous"
       }
     ],
     "authorizer": {
@@ -113,8 +199,7 @@
     "id": "api:admin-graph-query",
     "upstream": {
       "preserve_host": true,
-      "url": "http://192.168.49.1:8000",
-      "strip_path": "/api"
+      "url": "http://host.minikube.internal:8000"
     },
     "match": {
       "url": "http://<*>.localhost:8080/api/admin/query",
